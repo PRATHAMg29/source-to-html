@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>SOURCE TO HTML</title>
+</head>
+<body>
+<pre>
+<font color="purple">#include&lt;stdio.h&gt;</font><font color="purple">#include "main.h"</font><font color="purple">#include "keywords.h"</font><font color="purple">#include "html.h"</font><font color="purple">#include "parser.h"</font>
+<font color="blue">int</font> main(<font color="blue">int</font> argc, <font color="blue">char</font> *argv[])
+{
+    Arguments arg;
+    FILE *src;
+    FILE *dest;
+    <font color="blue">if</font>(argc &lt; <font color="red">2</font> || argc &gt; <font color="red">4</font>)
+    {
+        printf(<font color="brown">"Invalid number of arguments. Type --help.\n"</font>);
+        <font color="blue">return</font> FAILURE;
+    }
+    <font color="blue">if</font>(strcmp(<font color="brown">"--help"</font>,argv[<font color="red">1</font>]) == <font color="red">0</font>)
+    {
+
+    }
+    <font color="blue">else</font> <font color="blue">if</font>(check_arguments(argc,argv,&amp;arg) == SUCCESS)
+    {
+        printf(<font color="brown">"VALIDATION SUCCESS.\n"</font>);
+        <font color="green">// printf("%s\n%s\n%d\n",arg.input_file,arg.output_file,arg.line_number);</font>
+        src = fopen(arg.input_file,<font color="brown">"r"</font>);
+        <font color="blue">if</font>(src == NULL)
+        {
+            printf(<font color="brown">"Cannot open source file.\n"</font>);
+            <font color="blue">return</font> FAILURE;
+        }
+        dest = fopen(arg.output_file,<font color="brown">"w"</font>);
+        <font color="blue">if</font>(dest == NULL)
+        {
+            printf(<font color="brown">"Cannot open destination file.\n"</font>);
+            <font color="blue">return</font> FAILURE;
+        }
+        write_html_header(dest);
+        parse_source(src, dest, arg.line_number);
+        write_html_footer(dest);
+        printf(<font color="brown">"Writing to %s file done.\n"</font>,arg.output_file);
+    }
+    <font color="blue">else</font>
+    {
+        <font color="blue">return</font> <font color="red">0</font>;
+    }
+}</pre>
+</body>
+</html>
